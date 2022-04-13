@@ -2,7 +2,13 @@ API helpers, Postman collection, etc.
 
 ## Aptean Inegration Platform (AIP)
 API use requires subscribing to AIP platform. (Requests are handled manually at this point)
-
+```
+Product ID: {}
+Tenant ID: {}
+Secret: {}
+API Key Server: {}
+API Key Browser: {}
+```
 Documentation: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
 **Producer**:
@@ -21,7 +27,7 @@ Documentation: https://stg.integration-graph.apteansharedservices.com/swagger/in
 | Register as consumer | POST consumers |
 |                      |                |
 
-**Playground**: You can use the Postman collection and environment json to invoke the APIs.
+**Playground**: You can use the Postman collection and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
 
 **Webhook receiver**:
 For the http endpoint to be registered as Webhook receiver for AIP you need to implement the following in the API controller:
