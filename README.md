@@ -30,6 +30,11 @@ Documentation: https://stg.integration-graph.apteansharedservices.com/swagger/in
 **Playground**: You can use the Postman collection and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
 
 **Webhook receiver**:
+You can use this endpoint as sample webhook reveiver https://stg.integration-consumer.apteansharedservices.com/v1/webhook/1be0959e-5e1a-4053-b273-2759efa045bf 
+(substitute the GUID to create your own unique inbox)
+
+You can then view the events in https://stg.integration-consumer.apteansharedservices.com/inbox
+
 For the http endpoint to be registered as Webhook receiver for AIP you need to implement the following in the API controller:
 
 ```
