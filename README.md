@@ -51,49 +51,73 @@ using Newtonsoft.Json.Linq;
 
 namespace SampleReveiver
 {
-    [HttpPost]
-    public async Task<IActionResult> Post()
+    [Route("api/[controller]")]
+    public class WebhookController : Controller
     {
-        using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
+        [HttpPost]
+        public async Task<IActionResult> Post()
         {
-            var jsonContent = await reader.ReadToEndAsync();
-
-            // Check the event type.
-            // Return the validation code if it's 
-            // a subscription validation request. 
-            if (EventTypeSubcriptionValidation)
+            using (var reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
-                return await HandleValidation(jsonContent);
+                var jsonContent = await reader.ReadToEndAsync();
+
+                // Check the event type.
+                // Return the validation code if it's 
+                // a subscription validation request. 
+                if (EventTypeSubcriptionValidation)
+                {
+                    return await HandleValidation(jsonContent);
+                }
+                else if (EventTypeNotification)
+                {
+                    //return await HandleGridEvents(jsonContent); -to do
+                }            
+                return BadRequest();                
             }
-            return BadRequest();                
         }
-    }
 
-    private bool EventTypeSubcriptionValidation
-        => HttpContext.Request.Headers["aeg-event-type"].FirstOrDefault() ==
-            "SubscriptionValidation";
+        private bool EventTypeSubcriptionValidation
+            => HttpContext.Request.Headers["aeg-event-type"].FirstOrDefault() ==
+                "SubscriptionValidation";
+        private bool EventTypeNotification
+            => HttpContext.Request.Headers["aeg-event-type"].FirstOrDefault() ==
+                "Notification";
 
-    private async Task<JsonResult> HandleValidation(string jsonContent)
-    {
-        var gridEvent =
-            JsonConvert.DeserializeObject<List<GridEvent<Dictionary<string, string>>>>(jsonContent)
-                .First();
-        // Retrieve the validation code and echo back.
-        var validationCode = gridEvent.Data["validationCode"];
-        return new JsonResult(new
+        private async Task<JsonResult> HandleValidation(string jsonContent)
         {
-            validationResponse = validationCode
-        });
-    }
+            var gridEvent =
+                JsonConvert.DeserializeObject<List<GridEvent<Dictionary<string, string>>>>(jsonContent)
+                    .First();
+            // Retrieve the validation code and echo back.
+            var validationCode = gridEvent.Data["validationCode"];
+            return new JsonResult(new
+            {
+                validationResponse = validationCode
+            });
+        }
 
-    public class GridEvent<T> where T: class
-    {
-        public string Id { get; set;}
-        public string EventType { get; set;}
-        public string Subject {get; set;}
-        public DateTime EventTime { get; set; } 
-        public T Data { get; set; } 
-        public string Topic { get; set; }
+        private async Task<IActionResult> HandleGridEvents(string jsonContent)
+        {
+            var events = JArray.Parse(jsonContent);
+            foreach (var e in events)
+            {
+                var details = JsonConvert.DeserializeObject<GridEvent<dynamic>>(e.ToString());
+                //validate payload signature -- see sample project
+                //process event
+            }
+
+            return Ok();
+        }
+
+        public class GridEvent<T> where T: class
+        {
+            public string Id { get; set;}
+            public string EventType { get; set;}
+            public string Subject {get; set;}
+            public DateTime EventTime { get; set; } 
+            public T Data { get; set; } 
+            public string Topic { get; set; }
+        }
     }
 }
 ```
