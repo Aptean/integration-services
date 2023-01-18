@@ -1,6 +1,8 @@
-API helpers, Postman collection, etc.
-
 ## Aptean Inegration Platform (AIP)
+This document describes API helpers, Postman collection, etc.
+## Reference Architecture
+![reference](Reference-architecture.png)
+## API headers
 API use requires subscribing to AIP platform. (Requests are handled manually at this point)
 ```
 Product ID: {}
@@ -9,13 +11,13 @@ Secret: {}
 API Key Server: {}
 API Key Browser: {}
 ```
-Documentation: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
+**API Documentation**: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
 **Producer**:
 
 | **Tasks**                  | **API**                |
 | :------------------------- | :--------------------- |
-| Register as producer       | POST producers         |
+| Register as producer       | POST producers (*this is done automatically)         |
 | Register event definitions | POST event-definitions |
 | Publish event              | POST events            |
 |                            |                        |
@@ -35,7 +37,7 @@ You can use this endpoint as sample webhook reveiver https://stg.integration-con
 
 You can then view the events in https://stg.integration-consumer.apteansharedservices.com/inbox
 
-For the http endpoint to be registered as Webhook receiver for AIP you need to implement the following in the API controller:
+For the http endpoint to be registered as Webhook receiver for AIP you can implement the following in the API controller. (You could also build a logic app/function app for a webhook receiver. More information is available in Microsoft sites for Event Grid)
 
 ```
 using System;
