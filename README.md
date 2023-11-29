@@ -106,6 +106,7 @@ namespace SampleReveiver
                 var details = JsonConvert.DeserializeObject<GridEvent<dynamic>>(e.ToString());
                 //validate payload signature -- see sample project
                 //process event
+                //call Data mapping service to convert payload
             }
 
             return Ok();
