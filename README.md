@@ -3,21 +3,18 @@ This document describes API helpers, Postman collection, etc.
 ## Reference Architecture
 ![reference](Reference-architecture.png)
 ## API headers
-API use requires subscribing to AIP platform. (Requests are handled manually at this point)
+API use requires subscribing to AIP platform. (These are provided by SRE team)
 ```
-Product ID: {}
-Tenant ID: {}
-Secret: {}
-API Key Server: {}
-API Key Browser: {}
+X-APTEAN-TENANT
+X-APTEAN-APIM
+X-APTEAN-PRODUCT
 ```
 **API Documentation**: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
-**Producer**:
+**Producer - publish events**:
 
 | **Tasks**                  | **API**                |
 | :------------------------- | :--------------------- |
-| Register as producer       | POST producers (*this is done automatically)         |
 | Register event definitions | POST event-definitions |
 | Publish event              | POST events            |
 |                            |                        |
@@ -31,11 +28,12 @@ API Key Browser: {}
 
 **Playground**: You can use the Postman collection and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
 
-**Webhook receiver**:
-You can use this endpoint as sample webhook reveiver https://stg.integration-consumer.apteansharedservices.com/v1/webhook/1be0959e-5e1a-4053-b273-2759efa045bf 
-(substitute the GUID to create your own unique inbox)
+**Webhook receiver if you are consuming events**:
+You can use the following endpoint as sample webhook reveiver https://stg.integration-consumer.apteansharedservices.com/v1/webhook/{{guid}} 
+(substitute the GUID to create your own unique inbox). You can then view the events in https://stg.integration-consumer.apteansharedservices.com/inbox
+Or use webhook.site which is publicly available site to quickly set up webhook endpoint.
 
-You can then view the events in https://stg.integration-consumer.apteansharedservices.com/inbox
+For actual implementation you should create your own http service. See the following section for guidance.
 
 For the http endpoint to be registered as Webhook receiver for AIP you can implement the following in the API controller. (You could also build a logic app/function app for a webhook receiver. More information is available in Microsoft sites for Event Grid)
 
