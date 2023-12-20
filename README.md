@@ -1,7 +1,6 @@
 ## Aptean Inegration Platform (AIP)
-This document describes API helpers, Postman collection, etc.
-## Reference Architecture
-![reference](Reference-architecture.png)
+This document describes API helpers
+
 ## API headers
 API use requires subscribing to AIP platform. (These are provided by SRE team)
 ```
@@ -33,7 +32,7 @@ You can use the following endpoint as sample webhook reveiver https://stg.integr
 (substitute the GUID to create your own unique inbox). You can then view the events in https://stg.integration-consumer.apteansharedservices.com/inbox
 Or use webhook.site which is publicly available site to quickly set up webhook endpoint.
 
-For actual implementation you should create your own http service. See the following section for guidance.
+For actual implementation you should create your own http service. See the following template for guidance.
 
 For the http endpoint to be registered as Webhook receiver for AIP you can implement the following in the API controller. (You could also build a logic app/function app for a webhook receiver. More information is available in Microsoft sites for Event Grid)
 
