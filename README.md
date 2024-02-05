@@ -1,4 +1,4 @@
-## Aptean Inegration Platform (AIP)
+## Aptean Integration Platform (AIP)
 This document describes API usage for v1 and v2. Note that v2 details are currently being added.
 
 *Swagger Documentation*: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
@@ -12,7 +12,7 @@ X-APTEAN-PRODUCT : product ID
 X-APTEAN-CORRELATION-ID : correlation ID to group published event and consumer logs and any system events
 ```
 
-**Producer - publish events**:
+## Producer - publish events:
 
 | **Tasks**                  | **API**                |
 | :------------------------- | :--------------------- |
@@ -20,7 +20,8 @@ X-APTEAN-CORRELATION-ID : correlation ID to group published event and consumer l
 | Publish event              | POST events            |
 |                            |                        |
 
-**Consumer**: (requires Webhook to receive events*)
+## Consumer: 
+(requires Webhook to receive events*)
 
 | **Tasks**            | **API**        |
 | :------------------- | :------------- |
