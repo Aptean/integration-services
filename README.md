@@ -4,11 +4,12 @@ This document describes API usage for v1 and v2. Note that v2 details are curren
 *Swagger Documentation*: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
 ## API headers
-API use requires subscribing to AIP platform. These are the standard authorization headers.
+API use requires subscribing to AIP platform. These are the standard authorization headers. 
 ```
-X-APTEAN-TENANT
-X-APTEAN-APIM
-X-APTEAN-PRODUCT
+X-APTEAN-TENANT : tenant ID
+X-APTEAN-APIM : API Key
+X-APTEAN-PRODUCT : product ID
+X-APTEAN-CORRELATION-ID : correlation ID to group published event and consumer logs and any system events
 ```
 
 **Producer - publish events**:
@@ -110,7 +111,7 @@ namespace SampleReveiver
                 var details = JsonConvert.DeserializeObject<GridEvent<dynamic>>(e.ToString());
                 //validate payload signature -- see sample project
                 //process event and
-                //call eventlog for each step
+                //call eventlog for each step using the X-APTEAN-CORRELATION-ID
             }
 
             return Ok();
