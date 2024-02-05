@@ -1,14 +1,15 @@
 ## Aptean Inegration Platform (AIP)
-This document describes API helpers
+This document describes API usage for v1 and v2. Note that v2 details are currently being added.
+
+*Swagger Documentation*: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
 ## API headers
-API use requires subscribing to AIP platform. (These are provided by SRE team)
+API use requires subscribing to AIP platform. These are the standard authorization headers.
 ```
 X-APTEAN-TENANT
 X-APTEAN-APIM
 X-APTEAN-PRODUCT
 ```
-**API Documentation**: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
 **Producer - publish events**:
 
@@ -23,9 +24,10 @@ X-APTEAN-PRODUCT
 | **Tasks**            | **API**        |
 | :------------------- | :------------- |
 | Register as consumer | POST consumers |
+| Log processing steps | POST events/eventlog |
 |                      |                |
 
-**Playground**: You can use the Postman collection and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
+**Playground**: You can use the Postman collection (needs to be updated for v2) and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
 
 **Webhook receiver if you are consuming events**:
 You can use the following endpoint as sample webhook reveiver https://stg.integration-consumer.apteansharedservices.com/v1/webhook/{{guid}} 
@@ -34,7 +36,12 @@ Or use webhook.site which is publicly available site to quickly set up webhook e
 
 For actual implementation you should create your own http service. See the following template for guidance.
 
-For the http endpoint to be registered as Webhook receiver for AIP you can implement the following in the API controller. (You could also build a logic app/function app for a webhook receiver. More information is available in Microsoft sites for Event Grid)
+For the http endpoint to be registered as Webhook receiver for AIP you can implement the following in the API controller. (You could also build a logic app/function app for a webhook receiver. More information is available in Microsoft sites for Event Grid).
+
+Webhook service must perform the following actions:
+- Respond to validation event so AIP can send events to the webhook - this action is called only when the consumer is registered the first time
+- Handle the event and acknowledge with http response code 200
+- Call the end point **/events/eventlog** to log all pertinent actions asoociated with processing the event - these logs are used for event visualization
 
 ```
 using System;
@@ -69,7 +76,7 @@ namespace SampleReveiver
                 }
                 else if (EventTypeNotification)
                 {
-                    //return await HandleGridEvents(jsonContent); -to do
+                    return await HandleGridEvents(jsonContent);
                 }            
                 return BadRequest();                
             }
@@ -102,8 +109,8 @@ namespace SampleReveiver
             {
                 var details = JsonConvert.DeserializeObject<GridEvent<dynamic>>(e.ToString());
                 //validate payload signature -- see sample project
-                //process event
-                //call Data mapping service to convert payload
+                //process event and
+                //call eventlog for each step
             }
 
             return Ok();
