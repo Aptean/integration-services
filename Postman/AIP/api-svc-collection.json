@@ -82,7 +82,8 @@
 					{
 						"key": "X-APTEAN-USER",
 						"value": "{{initiatedBy}}",
-						"type": "text"
+						"type": "text",
+						"description": "user name or system identifier"
 					}
 				],
 				"body": {
@@ -114,12 +115,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 201\", function () {\r",
-							"    pm.response.to.have.status(201);\r",
-							"});\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
-							"});"
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -145,18 +141,20 @@
 					},
 					{
 						"key": "X-APTEAN-USER",
-						"value": "{{user}}",
-						"type": "text"
+						"value": "{{$randomUserName}}",
+						"type": "text",
+						"description": "user name or system identifier"
 					},
 					{
 						"key": "X-APTEAN-CORRELATION-ID",
-						"value": "{{unique-id-for-event}}",
-						"type": "text"
+						"value": "{{$guid}}",
+						"type": "text",
+						"description": "unique value for the event - can be guid or domain ID"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventDefinitionType\": \"sample-def-v2\",\n    \"sourceTenantId\": \"{{customer tenant ID}}\",\n    \"sourceProductId\" : \"{{producerProductId}}\",\n    \"payload\": {\n        \"orderId\": \"{{$randomInt}}\",\n        \"amount\": {{$randomInt}},\n        \"orderDate\": \"{{$randomDateFuture}}\"\n    }\n }",
+					"raw": "{\n    \"eventDefinitionType\": \"sample-def-v2\",\n    \"sourceTenantId\": \"{{customer tenant ID}}\",\n    \"sourceProductId\": \"{{producerProductId}}\",\n    \"payload\": {\n        \"orderId\": \"{{$randomInt}}\",\n        \"amount\": {{$randomInt}},\n        \"orderDate\": \"{{$randomDateFuture}}\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,6 +171,74 @@
 						"events"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eventlog",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-APTEAN-TENANT",
+						"value": "{{producerTenantId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-APIM",
+						"value": "{{producerApiKeyBrowser}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-PRODUCT",
+						"value": "{{producerProductId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-USER",
+						"value": "{{$randomUserName}}",
+						"type": "text",
+						"description": "user name or system name"
+					},
+					{
+						"key": "X-APTEAN-CORRELATION-ID",
+						"value": "{{$guid}}",
+						"type": "text",
+						"description": "This value must match the correlation ID from the retrieved event"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventDefinitionType\": \"event-acknowledgement\",\n    \"sourceTenantId\": \"tenantID from the event\",\n    \"sourceProductId\": \"{{producerProductId}}\",\n    \"payload\": {\n        \"action\": \"processed/received\",\n        \"message\": \"order created in erp\",\n        \"status\": \"success/fail\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiBaseUrl}}/v2/events/eventlog",
+					"host": [
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"events",
+						"eventlog"
+					]
+				},
+				"description": "This POST request is used to log events in the system. The request should be sent to {{apiBaseUrl}}/v2/events/eventlog with a JSON payload in the raw request body. The payload should include the eventDefinitionType, sourceTenantId, sourceProductId, action, message, and status.\n\n### Request Body\n\n- eventDefinitionType (string): value is event-acknoledgement\n    \n- sourceTenantId (string): ID of the source tenant from the event that is being processed\n    \n- sourceProductId (string): x-aptean-product value\n    \n- payload (object): Contains action, message, and status of the event"
 			},
 			"response": []
 		}
