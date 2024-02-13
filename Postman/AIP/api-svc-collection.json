@@ -1,598 +1,180 @@
 {
 	"info": {
-		"_postman_id": "10b7b96f-e0a6-4f0b-ab8c-0fcb9112efee",
-		"name": "API-SVC",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "351e0c53-4f64-4e31-8f20-0c66b1d508e2",
+		"name": "SDK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15936511"
 	},
 	"item": [
 		{
-			"name": "Consumers",
-			"item": [
-				{
-					"name": "Update Consumer",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"producerId\": \"{{producerTenantId}}\",\n    \"subscribedEvents\": [\n        {\n            \"eventDefinitionType\": \"sales-order-edited\",\n            \"webhook\": \"{{webhookAddress}}\",\n            \"ttl\": \"0.00:01:00\",\n            \"attempts\": 2\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+			"name": "List Event Definitions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-APTEAN-TENANT",
+						"value": "{{producerTenantId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-APIM",
+						"value": "{{producerApiKeyBrowser}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-PRODUCT",
+						"value": "{{producerProductId}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{apiBaseUrl}}/v2/event-definitions?productId=287dc3ae-9a54-41d5-aadd-06c2f0607c00",
+					"host": [
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"event-definitions"
+					],
+					"query": [
+						{
+							"key": "productId",
+							"value": "287dc3ae-9a54-41d5-aadd-06c2f0607c00",
+							"description": "eam"
 						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/consumers/8179f4aa-32d4-4b56-bdbf-84cf4ba6c2f5",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"consumers",
-								"8179f4aa-32d4-4b56-bdbf-84cf4ba6c2f5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Consumer",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"producerId\": \"{{producerTenantId}}\",\n    \"subscribedEvents\": [\n        {\n            \"eventDefinitionType\": \"sales-order-created\",\n            \"webhook\": \"{{webhookAddress}}\",\n            \"ttl\": \"1.00:00:00\",\n            \"attempts\": 1\n        },\n        {\n            \"eventDefinitionType\": \"sales-order-edited\",\n            \"webhook\": \"{{webhookAddress}}\",\n            \"ttl\": \"0.00:01:00\",\n            \"attempts\": 1\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+						{
+							"key": "productId",
+							"value": "446ebd6c-b3c1-4b81-906f-b6dfe72b637e",
+							"description": "m2m",
+							"disabled": true
 						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/consumers",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"consumers"
-							]
+						{
+							"key": "productId",
+							"value": "d6e08344-697c-4c26-8822-52842cda808e",
+							"description": "ship",
+							"disabled": true
 						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Consumer",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/consumers/8179f4aa-32d4-4b56-bdbf-84cf4ba6c2f5",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"consumers",
-								"8179f4aa-32d4-4b56-bdbf-84cf4ba6c2f5"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Consumers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/consumers?producerId={{producerTenantId}}",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"consumers"
-							],
-							"query": [
-								{
-									"key": "producerId",
-									"value": "{{producerTenantId}}"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get Consumer",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/consumers/4e83d4fc-5c55-49d1-af25-ae9783844699",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"consumers",
-								"4e83d4fc-5c55-49d1-af25-ae9783844699"
-							]
-						}
-					},
-					"response": []
+					]
 				}
-			]
+			},
+			"response": []
 		},
 		{
-			"name": "Event Definitions",
-			"item": [
-				{
-					"name": "List Event Definitions",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/event-definitions?productId={{producerProductId}}",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"event-definitions"
-							],
-							"query": [
-								{
-									"key": "productId",
-									"value": "{{producerProductId}}"
-								}
-							]
-						}
+			"name": "Create Event Definition",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-APTEAN-TENANT",
+						"value": "{{producerTenantId}}",
+						"type": "default"
 					},
-					"response": []
+					{
+						"key": "X-APTEAN-APIM",
+						"value": "{{producerApiKeyBrowser}}",
+						"type": "default"
+					},
+					{
+						"key": "X-APTEAN-PRODUCT",
+						"value": "{{producerProductId}}",
+						"type": "default"
+					},
+					{
+						"key": "X-APTEAN-USER",
+						"value": "{{initiatedBy}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productId\": \"{{producerProductId}}\",\n    \"productVersion\": \"\",\n    \"eventDefinitions\": [\n        {\n            \"name\": \"sample event definition\",\n            \"description\": \"sample event definition\",\n            \"type\": \"sample-def-v2\",\n            \"payloadSchema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"orderId\": {\n                        \"type\": \"string\"\n                    },\n                    \"amount\": {\n                        \"type\": \"integer\"\n                    },\n                    \"orderDate\": {\n                        \"type\": \"string\"\n                    }\n                },\n                \"additionalProperties\": false\n            },\n            \"settings\": {\n                \"timeToLive\": \"0.00:10:00\",\n                \"retryable\": true\n            }\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
-				{
-					"name": "Create Event Definitions",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"productId\": \"{{producerProductId}}\",\n    \"eventDefinitions\": [\n        {\n            \"name\": \"Sales order created\",\n            \"description\": \"Raised when a new sales order comes in\",\n            \"type\": \"sales-order-created\",\n            \"payloadSchema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"orderId\": {\n                        \"type\": \"string\"\n                    },\n                    \"amount\": {\n                        \"type\": \"integer\"\n                    },\n                    \"dueDate\": {\n                        \"type\": \"string\"\n                    }\n                },\n                \"additionalProperties\": false\n            },\n            \"settings\": {\n                \"timeToLive\": \"0.00:10:00\",\n                \"retryable\": true\n            }\n        },\n        {\n            \"name\": \"Sales order edited\",\n            \"description\": \"Raised when a sales order is edited\",\n            \"type\": \"sales-order-edited\",\n            \"payloadSchema\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"orderId\": {\n                        \"type\": \"string\"\n                    },\n                    \"amount\": {\n                        \"type\": \"integer\"\n                    },\n                    \"dueDate\": {\n                        \"type\": \"string\"\n                    }\n                },\n                \"additionalProperties\": false\n            },\n            \"settings\": {\n                \"timeToLive\": \"0.00:10:00\",\n                \"retryable\": true\n            }\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/event-definitions",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"event-definitions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update Event Definition",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"updated-name\",\n    \"description\": \"descr\",\n    \"payloadSchema\": {\n        \"type\": \"object\",\n        \"properties\": {\n            \"orderId\": {\n                \"type\": \"string\"\n            },\n            \"amount\": {\n                \"type\": \"integer\"\n            },\n            \"dueDate\": {\n                \"type\": \"string\"\n            }\n        },\n        \"additionalProperties\": false\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/event-definitions/81d69633-c1de-49b8-8887-a472c2f896b4",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"event-definitions",
-								"81d69633-c1de-49b8-8887-a472c2f896b4"
-							]
-						}
-					},
-					"response": []
+				"url": {
+					"raw": "{{apiBaseUrl}}/v2/event-definitions",
+					"host": [
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"v2",
+						"event-definitions"
+					]
 				}
-			]
+			},
+			"response": []
 		},
 		{
-			"name": "Events",
-			"item": [
+			"name": "Publish Event",
+			"event": [
 				{
-					"name": "Publish Event",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{producerTenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{producerApiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{producerProductId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-CORRELATION-ID",
-								"value": "12345",
-								"type": "text"
-							}
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(250);\r",
+							"});"
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"eventDefinitionType\": \"sales-order-created\",\n    \"payload\": {\n        \"orderId\": \"123\",\n        \"amount\": 1234,\n        \"dueDate\": \"2021-01-01\"\n    }\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/events",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"events"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Events",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{producerTenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{producerApiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{producerProductId}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/events?startDate=2022-01-01T09:00:00.000Z&endDate=2022-03-11T20:00:00.000Z",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"events"
-							],
-							"query": [
-								{
-									"key": "startDate",
-									"value": "2022-01-01T09:00:00.000Z"
-								},
-								{
-									"key": "endDate",
-									"value": "2022-03-11T20:00:00.000Z"
-								}
-							]
-						}
-					},
-					"response": []
+						"type": "text/javascript"
+					}
 				}
-			]
-		},
-		{
-			"name": "Producers",
-			"item": [
-				{
-					"name": "Delete Producer",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{producerTenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{producerApiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{producerProductId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/producers/{{producerTenantId}}",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"producers",
-								"{{producerTenantId}}"
-							]
-						}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-APTEAN-TENANT",
+						"value": "{{producerTenantId}}",
+						"type": "text"
 					},
-					"response": []
+					{
+						"key": "X-APTEAN-APIM",
+						"value": "{{producerApiKeyBrowser}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-PRODUCT",
+						"value": "{{producerProductId}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-USER",
+						"value": "{{user}}",
+						"type": "text"
+					},
+					{
+						"key": "X-APTEAN-CORRELATION-ID",
+						"value": "{{unique-id-for-event}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventDefinitionType\": \"sample-def-v2\",\n    \"sourceTenantId\": \"{{customer tenant ID}}\",\n    \"sourceProductId\" : \"{{producerProductId}}\",\n    \"payload\": {\n        \"orderId\": \"{{$randomInt}}\",\n        \"amount\": {{$randomInt}},\n        \"orderDate\": \"{{$randomDateFuture}}\"\n    }\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
-				{
-					"name": "Create Producer",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{producerTenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{producerApiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{producerProductId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-USER",
-								"value": "{{initiatedBy}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Ferry's Coffee Shop\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/producers",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"producers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "List Producers",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "X-APTEAN-TENANT",
-								"value": "{{tenantId}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-APIM",
-								"value": "{{apiKeyBrowser}}",
-								"type": "default"
-							},
-							{
-								"key": "X-APTEAN-PRODUCT",
-								"value": "{{productId}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{apiBaseUrl}}/v1/producers?productId={{producerProductId}}",
-							"host": [
-								"{{apiBaseUrl}}"
-							],
-							"path": [
-								"v1",
-								"producers"
-							],
-							"query": [
-								{
-									"key": "productId",
-									"value": "{{producerProductId}}"
-								}
-							]
-						}
-					},
-					"response": []
+				"url": {
+					"raw": "{{apiBaseUrl}}/v1/events",
+					"host": [
+						"{{apiBaseUrl}}"
+					],
+					"path": [
+						"v1",
+						"events"
+					]
 				}
-			]
+			},
+			"response": []
 		}
 	]
 }
