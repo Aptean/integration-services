@@ -29,7 +29,8 @@ X-APTEAN-CORRELATION-ID : correlation ID to group published event and consumer l
 | Log processing steps | POST events/eventlog |
 |                      |                |
 
-**Playground**: You can use the Postman collection (needs to be updated for v2) and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
+**Playground**: You can use the Postman collection (updated frequently to add new samples) and environment setup json to invoke the APIs. Plugin the subscription info in the environment setup.
+Check the event-definition, publish event and event log sample requests.
 
 **Webhook receiver if you are consuming events**:
 You can use the following endpoint as sample webhook reveiver https://stg.integration-consumer.apteansharedservices.com/v1/webhook/{{guid}} 
