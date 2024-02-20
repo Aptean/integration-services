@@ -46,6 +46,8 @@ Webhook service must perform the following actions:
 - Handle the event and acknowledge with http response code 200
 - Call the end point **/events/eventlog** to log all pertinent actions asoociated with processing the event - these logs are used for event visualization
 
+![reference](AIP-2-ERP-Flow.png)
+
 ```
 using System;
 using System.Collections.Generic;
