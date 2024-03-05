@@ -1,5 +1,5 @@
 ## Aptean Integration Platform (AIP)
-This document describes API usage for v1 and v2. Note that v2 details are currently being added.
+**For the latest documentation**, please see [wiki](https://dev.azure.com/Aptean/Shared%20Technology%20Group/_wiki/wikis/Shared-Technology-Group.wiki/4118/Development-Guidelines)
 
 *Swagger Documentation*: https://stg.integration-graph.apteansharedservices.com/swagger/index.html
 
