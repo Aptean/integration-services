@@ -28,7 +28,7 @@
 					}
 				],
 				"url": {
-					"raw": "{{apiBaseUrl}}/v2/event-definitions?productId=287dc3ae-9a54-41d5-aadd-06c2f0607c00",
+					"raw": "{{apiBaseUrl}}/v2/event-definitions?productId=446ebd6c-b3c1-4b81-906f-b6dfe72b637e",
 					"host": [
 						"{{apiBaseUrl}}"
 					],
@@ -40,13 +40,13 @@
 						{
 							"key": "productId",
 							"value": "287dc3ae-9a54-41d5-aadd-06c2f0607c00",
-							"description": "eam"
+							"description": "eam",
+							"disabled": true
 						},
 						{
 							"key": "productId",
 							"value": "446ebd6c-b3c1-4b81-906f-b6dfe72b637e",
-							"description": "m2m",
-							"disabled": true
+							"description": "m2m"
 						},
 						{
 							"key": "productId",
@@ -127,7 +127,8 @@
 					{
 						"key": "X-APTEAN-TENANT",
 						"value": "{{producerTenantId}}",
-						"type": "text"
+						"type": "text",
+						"description": "Service tenant"
 					},
 					{
 						"key": "X-APTEAN-APIM",
@@ -170,7 +171,8 @@
 						"v1",
 						"events"
 					]
-				}
+				},
+				"description": "This POST request is used to publish events to AIP which is intended to be consumed by subscriber(s).\n\nThe header must contain unique correlation ID of the event which can often be a domain ID like order number.\n\n### Request Body\n\n- eventDefinitionType (string): the unique type of the event registered using the event-deinition POST. Event definition is tied to a particular product like ERP or a service like Ship.\n    \n- sourceTenantId (string): tenant ID of the customer for which the event that is being processed\n    \n- sourceProductId (string): productId creating the event\n    \n- payload (object): Contains data that conforms to the event definition payload schema"
 			},
 			"response": []
 		},
@@ -206,12 +208,6 @@
 						"type": "text"
 					},
 					{
-						"key": "X-APTEAN-USER",
-						"value": "{{$randomUserName}}",
-						"type": "text",
-						"description": "user name or system name"
-					},
-					{
 						"key": "X-APTEAN-CORRELATION-ID",
 						"value": "{{$guid}}",
 						"type": "text",
@@ -220,7 +216,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventDefinitionType\": \"event-acknowledgement\",\n    \"sourceTenantId\": \"tenantID from the event\",\n    \"sourceProductId\": \"{{producerProductId}}\",\n    \"payload\": {\n        \"action\": \"processed/received\",\n        \"message\": \"order created in erp\",\n        \"status\": \"success/fail\"\n    }\n}",
+					"raw": "{\n    \"eventDefinitionType\": \"event-acknowledgement\",\n    \"sourceTenantId\": \"{{customer tenant ID}}\",\n    \"sourceProductId\": \"{{ProductId}}\",\n    \"payload\": {\n        \"action\": \"processed/received\",\n        \"message\": \"order created in erp\",\n        \"status\": \"success/fail\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -238,7 +234,7 @@
 						"eventlog"
 					]
 				},
-				"description": "This POST request is used to log events in the system. The request should be sent to {{apiBaseUrl}}/v2/events/eventlog with a JSON payload in the raw request body. The payload should include the eventDefinitionType, sourceTenantId, sourceProductId, action, message, and status.\n\n### Request Body\n\n- eventDefinitionType (string): value is event-acknoledgement\n    \n- sourceTenantId (string): ID of the source tenant from the event that is being processed\n    \n- sourceProductId (string): x-aptean-product value\n    \n- payload (object): Contains action, message, and status of the event"
+				"description": "This POST request is used to log events in the system. The request should be sent to {{apiBaseUrl}}/v2/events/eventlog with a JSON payload in the raw request body. The payload should include the eventDefinitionType, sourceTenantId, sourceProductId, action, message, and status.\n\nThe header must contain the correlationID from the event.\n\n### Request Body\n\n- eventDefinitionType (string): value is event-acknowledgement\n- sourceTenantId (string): tenant ID of the customer for which the event that is being processed\n    \n- sourceProductId (string): productId creating the event\n    \n- payload (object): Contains action, message, and status of the event"
 			},
 			"response": []
 		}
