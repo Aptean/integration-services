@@ -13,7 +13,7 @@
 				"header": [
 					{
 						"key": "X-APTEAN-TENANT",
-						"value": "{{producerTenantId}}",
+						"value": "{{producerTenantId}}",ƒ
 						"type": "text"
 					},
 					{
@@ -163,12 +163,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{apiBaseUrl}}/v1/events",
+					"raw": "{{apiBaseUrl}}/v2/events",
 					"host": [
 						"{{apiBaseUrl}}"
 					],
 					"path": [
-						"v1",
+						"v2",
 						"events"
 					]
 				},
